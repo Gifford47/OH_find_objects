@@ -13,7 +13,7 @@ conf_dir = "/etc/openhab"
 
 table.field_names = ["Object", "UID", "Name", "Label", "Description", "Tags", "File"]
 
-ui_files = {
+jsondb_files = {
     'rules' : jsondb_dir + "/automation_rules.json",
     'items' : jsondb_dir + "/org.openhab.core.items.Item.json",
     'things' : jsondb_dir + "/org.openhab.core.thing.Thing.json",
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     search = args.search_string
     print("Search String: '" + args.search_string + "'")
 
-    read_json_or_file(ui_files)
+    read_json_or_file(jsondb_files)
     print("\nIn Conf-Files:")
     read_json_or_file(conf_files)
     print("\nIn UI-Files:")
