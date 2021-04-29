@@ -9,3 +9,5 @@ positional arguments:
 
 optional arguments:
   -h, --help     show this help message and exit
+<br><br> Example Output:<br>
+![test](https://user-images.githubusercontent.com/49484063/116525192-8e602500-a8d8-11eb-874f-cdb5f2f5609c.PNG)
