@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 #pip install prettytable
@@ -10,6 +10,7 @@ table = PrettyTable()
 
 jsondb_dir = "/var/lib/openhab/jsondb"
 conf_dir = "/etc/openhab"
+conf_dir = "C:/Users/risshend/Downloads/TMP"
 
 table.field_names = ["Object", "UID", "Name", "Label", "Description", "Tags", "File"]
 
@@ -32,7 +33,7 @@ conf_files = {
     'persistence': conf_dir + "/persistence",
 }
 
-def read_json_or_file(files):
+def read_json(files):
     for file_key in files:
         if os.path.isfile(files[file_key]):
             with open(files[file_key]) as json_file:
@@ -57,25 +58,27 @@ def read_json_or_file(files):
                             #if file_key == "txt_files":  # for specific json files/keys
                                 #table.add_row([str(file_key), str(json_data[first_key]['value']['uid']), "", str(json_data[first_key]['value']['config']['label']), "" , "", str(files[file_key])])
 
-        else:
-            if os.path.isdir(files[file_key]):
-                for root, dirs, file_path in os.walk(files[file_key]):
-                    # diese skriptdatei ignorieren
-                    if os.path.basename(__file__) in file_path:
-                        file_path.remove(os.path.basename(__file__))
-                    for file in file_path:
-                        #print(os.path.join(root, file))
-                        try:
-                            with open(os.path.join(root, file), 'r') as file_opened:
-                                filedata = file_opened.read()
-                                file_opened.close()
-                            if search in filedata:
-                                print('Found in:' + os.path.join(root, file))
-                            #occ = re.findall(r"\b%s\b" % search, filedata)  # "\b" = represents the backspace character
-                            #if len(occ) > 0:
-                                #print('Found in:' + os.path.join(root, file))
-                        except:
-                            pass
+def read_file(files):
+    for file_key in files:
+        if os.path.isdir(files[file_key]):
+            for root, dirs, file_path in os.walk(files[file_key]):
+                # diese skriptdatei ignorieren
+                if os.path.basename(__file__) in file_path:
+                    file_path.remove(os.path.basename(__file__))
+                for file in file_path:
+                    #print(os.path.join(root, file))
+                    try:
+                        with open(os.path.join(root, file), 'r') as file_opened:
+                            filedata = file_opened.read()
+                            file_opened.close()
+                        if search in filedata:
+                            #print('Found in:' + os.path.join(root, file))
+                            occ = re.findall(r"\b%s\b" % search, filedata)  # "\b" = represents the backspace character
+                            if len(occ) > 0:
+                                print("Found " + str(len(occ)) + "x in: '" + os.path.join(root, file))
+                                occ = 0
+                    except:
+                        pass
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -85,8 +88,9 @@ if __name__ == '__main__':
     search = args.search_string
     print("Search String: '" + args.search_string + "'")
 
-    read_json_or_file(jsondb_files)
     print("\nIn Conf-Files:")
-    read_json_or_file(conf_files)
+    read_file(conf_files)
+
     print("\nIn UI-Files:")
+    read_json(jsondb_files)
     print(table.get_string())
