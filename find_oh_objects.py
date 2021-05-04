@@ -10,7 +10,6 @@ table = PrettyTable()
 
 jsondb_dir = "/var/lib/openhab/jsondb"
 conf_dir = "/etc/openhab"
-conf_dir = "C:/Users/risshend/Downloads/TMP"
 
 table.field_names = ["Object", "UID", "Name", "Label", "Description", "Tags", "File"]
 
