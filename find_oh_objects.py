@@ -11,6 +11,8 @@ table = PrettyTable()
 jsondb_dir = "/var/lib/openhab/jsondb"
 conf_dir = "/etc/openhab"
 
+replace_script = '/media/EXTERNE/tauschordner/find_replace.py'
+
 table.field_names = ["Object", "UID", "Name", "Label", "Description", "Tags", "File"]
 
 jsondb_files = {
@@ -83,7 +85,9 @@ def read_file(files):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(__file__)
     parser.add_argument("search_string", help="Search this string in jsondb and in defined conf files.", type=str)
+    parser.add_argument("-r", help="Replace search string with this string in jsondb and in defined conf files.", type=str, nargs=1)
     args = parser.parse_args()
+    #print(args)
     search = args.search_string
     print("Search String: '" + args.search_string + "'")
 
@@ -92,4 +96,12 @@ if __name__ == '__main__':
 
     print("\nIn UI-Files:")
     read_json(jsondb_files)
-    print(table.get_string())
+    print(table.get_string()+'\n\n')
+
+    # if replace argument exists:
+    if args.r:
+        replace_str = args.r[0]                                             # get replace str from list
+        print("<<<< Replacing String '" + search + "' with '" + replace_str + "'>>>>\n")
+        os.system(replace_script + ' -r ' + search + ' ' + replace_str + ' -p ' + jsondb_dir + ' -depth 0')     # replace only in root dir
+        print('\n')
+        os.system(replace_script + ' -r ' + search + ' ' + replace_str + ' -p ' + conf_dir)
