@@ -11,9 +11,10 @@ table = PrettyTable()
 jsondb_dir = "/var/lib/openhab/jsondb"
 conf_dir = "/etc/openhab"
 
-replace_script = '/media/EXTERNE/tauschordner/find_replace.py'
+replace_script = '/root/openhab/tools/find_replace.py'
 
 table.field_names = ["Object", "UID", "Name", "Label", "Description", "Tags", "File"]
+table._max_width = {"Object":35, "UID":35, "Name":35, "Label":35, "Description":35, "Tags":35, "File":40}
 
 jsondb_files = {
     'rules' : jsondb_dir + "/automation_rules.json",
