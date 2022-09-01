@@ -126,6 +126,7 @@ def read_items():
                                     pass
                                 items_dict[conf_files['items']][item_name] = item_label
                                 no_items += 1  # increase counter
+            break                       # skip all subdirs from os.walk ...                    
 
     print('Number of items:'+str(no_items))
     for key in items_dict:
