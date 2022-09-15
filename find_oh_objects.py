@@ -49,7 +49,7 @@ def find_str_in_json(search, files, quiet=False):
                         for first_key in json_data:
                             if search == first_key or search in str(json_data[first_key]):
                                 if file_key == "rules":  # for specific json files/keys
-                                    table.add_row([str(file_key), str(json_data[first_key]['value']['uid']) , str(json_data[first_key]['value']['name']), "", str(json_data[first_key]['value']['description']), "", str(files[file_key])])
+                                    table.add_row([str(file_key), str(json_data[first_key]['value']['uid']) , str(json_data[first_key]['value']['name']), "", str(json_data[first_key]['value'].get('description', '')), "", str(files[file_key])])
                                 elif file_key == "items":  # for specific json files/keys
                                     table.add_row([str(file_key), str(first_key), "", str(json_data[first_key]['value']['label']), "" , str(json_data[first_key]['value']['tags']), str(files[file_key])])
                                 elif file_key == "things":  # for specific json files/keys
